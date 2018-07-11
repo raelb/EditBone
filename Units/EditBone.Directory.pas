@@ -6,10 +6,10 @@ interface
 
 uses
   Winapi.Windows, System.SysUtils, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.ComCtrls,
-  BCControls.FileControl, Vcl.ImgList, Vcl.ActnList, Vcl.Buttons, Vcl.Menus, BCControls.PageControl, VirtualTrees,
-  System.Actions, BCCommon.Forms.SearchForFiles, BCCommon.Images, sPageControl, Vcl.StdCtrls,
-  Vcl.PlatformDefaultStyleActnCtrls, System.ImageList, acAlphaImageList, BCControls.ImageList,
-  BCComponents.SkinManager;
+  BCControl.FileControl, Vcl.ImgList, Vcl.ActnList, Vcl.Buttons, Vcl.Menus, BCControl.PageControl, VirtualTrees,
+  System.Actions, BCCommon.Form.SearchForFiles, BCCommon.Images, sPageControl, Vcl.StdCtrls,
+  Vcl.PlatformDefaultStyleActnCtrls, acAlphaImageList, BCControl.ImageList,
+  BCComponent.SkinManager;
 
 type
   TEBDirectory = class(TObject)
@@ -77,11 +77,11 @@ implementation
 
 uses
   EditBone.Dialog.DirectoryTab, BigIni, BCCommon.Language.Strings,
-  BCCommon.Options.Container, BCControls.Utils,
+  BCCommon.Options.Container, BCControl.Utils,
   System.Math, BCCommon.FileUtils, BCCommon.Messages, BCCommon.StringUtils,
-  BCCommon.Dialogs.Base,
+  BCCommon.Dialog.Base,
   Winapi.ShellAPI, Winapi.CommCtrl, EditBone.DataModule.Images,
-  BCControls.Panel, EditBone.Consts;
+  BCControl.Panel, EditBone.Consts;
 
 destructor TEBDirectory.Destroy;
 begin
@@ -485,7 +485,7 @@ var
   Result: Boolean;
   FileTreeView: TBCFileTreeView;
   SelectedNode: PVirtualNode;
-  Data: PBCFileTreeNodeRec;
+  Data: PBCFileTreeNodeRecord;
 begin
   FileTreeView := GetFileTreeView;
   if Assigned(FileTreeView) then

@@ -35,7 +35,7 @@ type
 implementation
 
 uses
-  Winapi.Windows, System.SysUtils, BCControls.Utils, BCCommon.Language.Strings, Vcl.Forms,
+  Winapi.Windows, System.SysUtils, BCControl.Utils, BCCommon.Language.Strings, Vcl.Forms,
   BCEditor.Encoding, BCEditor.Editor.Utils;
 
 procedure TFindInFilesThread.Execute;
@@ -185,14 +185,14 @@ begin
   LFileStream := TFileStream.Create(AFileName, fmOpenRead);
   try
     // Identify encoding
-    if IsUTF8(LFileStream, WithBom) then
+    {if IsUTF8(LFileStream, WithBom) then
     begin
       if WithBom then
         LEncoding := TEncoding.UTF8
       else
         LEncoding := BCEditor.Encoding.TEncoding.UTF8WithoutBOM;
     end
-    else
+    else  }
     begin
       // Read file into buffer
       SetLength(LBuffer, LFileStream.Size);

@@ -5,15 +5,15 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, BCCommon.Forms.Base, System.Actions, Vcl.ActnList, Vcl.AppEvnts, Vcl.Menus,
-  sSkinProvider, BCComponents.SkinProvider, acTitleBar, BCComponents.TitleBar, sSkinManager, BCComponents.SkinManager,
-  Vcl.ComCtrls, sStatusBar, BCControls.StatusBar, Vcl.ExtCtrls, sPanel, BCControls.Panel, sSplitter, BCControls.Splitter,
-  sPageControl, BCControls.PageControl, BCCommon.Images, BCControls.SpeedButton, Vcl.Buttons, sSpeedButton,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, BCCommon.Form.Base, System.Actions, Vcl.ActnList, Vcl.AppEvnts, Vcl.Menus,
+  sSkinProvider, acTitleBar, BCComponent.TitleBar, sSkinManager, BCComponent.SkinManager,
+  Vcl.ComCtrls, sStatusBar, BCControl.StatusBar, Vcl.ExtCtrls, sPanel, BCControl.Panel, sSplitter, BCControl.Splitter,
+  sPageControl, BCControl.PageControl, BCCommon.Images, BCControl.SpeedButton, Vcl.Buttons, sSpeedButton,
   EditBone.Directory, EditBone.Document, EditBone.Frame.Output, VirtualTrees, BCEditor.Print.Types,
-  Vcl.ActnMan, Vcl.ActnMenus, BCComponents.DragDrop, System.Diagnostics,
-  Vcl.PlatformDefaultStyleActnCtrls, JvAppInst, System.ImageList, Vcl.ImgList,
-  acAlphaImageList, BCControls.ProgressBar, EditBone.FindInFiles, BCEditor.MacroRecorder, BCEditor.Print, sDialogs,
-  System.Generics.Collections, Vcl.StdCtrls, System.Win.TaskbarCore, Vcl.Taskbar;
+  Vcl.ActnMan, Vcl.ActnMenus, BCComponent.DragDrop, System.Diagnostics,
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ImgList, {System.Win.TaskbarCore}
+  acAlphaImageList, BCControl.ProgressBar, EditBone.FindInFiles, BCEditor.MacroRecorder, BCEditor.Print, sDialogs,
+  System.Generics.Collections, Vcl.StdCtrls;
 
 type
   TMainForm = class(TBCBaseForm)
@@ -545,7 +545,6 @@ type
     Alternating1: TMenuItem;
     Sentence1: TMenuItem;
     itle1: TMenuItem;
-    AppInstances: TJvAppInstances;
     SpeedButtonDocumentMacro: TBCSpeedButton;
     ActionMacro: TAction;
     PopupMenuDocumentMacro: TPopupMenu;
@@ -829,13 +828,13 @@ implementation
 
 uses
   Winapi.CommCtrl, Winapi.ShellAPI, System.Math, System.IOUtils, EditBone.Consts, BCCommon.FileUtils,
-  BCCommon.Language.Utils, BCCommon.Language.Strings, BCEditor.Editor.Bookmarks, Vcl.Clipbrd, System.Types,
+  BCCommon.Language.Utils, BCCommon.Language.Strings, BCEditor.Editor.LeftMargin.Bookmarks, Vcl.Clipbrd, System.Types,
   BigIni, BCEditor.Editor, BCCommon.Options.Container, BCCommon.Options.Container.SQL.Formatter, BCCommon.Consts,
-  BCCommon.Utils, BCControls.Utils, BCCommon.Dialogs.FindInFiles,
-  BCEditor.Encoding, EditBone.Form.UnicodeCharacterMap, EditBone.Dialog.About, BCCommon.Dialogs.DownloadURL,
-  BCCommon.Forms.Convert, EditBone.Form.LanguageEditor, BCCommon.Messages, BCCommon.Forms.SearchForFiles,
-  BCCommon.StringUtils, BCEditor.Types, BCCommon.Dialogs.SkinSelect, sGraphUtils, sConst,
-  BCCommon.Forms.Print.Preview, EditBone.DataModule.Images;
+  BCCommon.Utils, BCControl.Utils, BCCommon.Dialog.FindInFiles,
+  BCEditor.Encoding, EditBone.Form.UnicodeCharacterMap, EditBone.Dialog.About, BCCommon.Dialog.DownloadURL,
+  BCCommon.Form.Convert, EditBone.Form.LanguageEditor, BCCommon.Messages, BCCommon.Form.SearchForFiles,
+  BCCommon.StringUtils, BCEditor.Types, BCCommon.Dialog.SkinSelect, sGraphUtils, sConst,
+  BCCommon.Form.Print.Preview, EditBone.DataModule.Images, BCEditor.Editor.Marks;
 
 
 procedure TMainForm.PageControlDirectoryCloseBtnClick(Sender: TComponent; TabIndex: Integer; var CanClose: Boolean;
@@ -1245,11 +1244,11 @@ begin
     FDocument.InitializeEditorPrint(EditorPrint);
     EditorPrint.Copies := PrintDialog.Copies;
     EditorPrint.SelectedOnly := PrintDialog.PrintRange = prSelection;
-    EditorPrint.UpdatePages(PrintPreviewDialog.Canvas); // TODO: needed?
+    //EditorPrint.UpdatePages(PrintPreviewDialog.Canvas); // TODO: needed?
 
     ProgressBar.Show(PageControlDocument.PageCount - 1);
     if PrintDialog.PrintRange = prPageNums then
-      EditorPrint.PrintRange(PrintDialog.FromPage, PrintDialog.ToPage)
+      EditorPrint.Print(PrintDialog.FromPage, PrintDialog.ToPage)
     else
       EditorPrint.Print;
     ProgressBar.Hide;
@@ -1394,7 +1393,7 @@ procedure TMainForm.ActionSelectionBoxDownExecute(Sender: TObject);
     if Assigned(Editor) then
       if Editor.Focused then
       begin
-        OptionsContainer.EnableSelectionMode := True;
+        OptionsContainer.SelectionModeEnabled := True;
         Editor.Selection.Options := Editor.Selection.Options + [soALTSetsColumnMode];
         Editor.Selection.Mode := smColumn;
         Keybd_Event(VK_SHIFT, MapVirtualKey(VK_SHIFT, 0), 0, 0);
@@ -1415,7 +1414,7 @@ procedure TMainForm.ActionSelectionBoxLeftExecute(Sender: TObject);
     if Assigned(Editor) then
       if Editor.Focused then
       begin
-        OptionsContainer.EnableSelectionMode := True;
+        OptionsContainer.SelectionModeEnabled := True;
         Editor.Selection.Options := Editor.Selection.Options + [soALTSetsColumnMode];
         Editor.Selection.Mode := smColumn;
         Keybd_Event(VK_SHIFT, MapVirtualKey(VK_SHIFT, 0), 0, 0);
@@ -1436,7 +1435,7 @@ procedure TMainForm.ActionSelectionBoxRightExecute(Sender: TObject);
     if Assigned(Editor) then
       if Editor.Focused then
       begin
-        OptionsContainer.EnableSelectionMode := True;
+        OptionsContainer.SelectionModeEnabled := True;
         Editor.Selection.Options := Editor.Selection.Options + [soALTSetsColumnMode];
         Editor.Selection.Mode := smColumn;
         Keybd_Event(VK_SHIFT, MapVirtualKey(VK_SHIFT, 0), 0, 0);
@@ -1457,7 +1456,7 @@ procedure TMainForm.ActionSelectionBoxUpExecute(Sender: TObject);
     if Assigned(Editor) then
       if Editor.Focused then
       begin
-        OptionsContainer.EnableSelectionMode := True;
+        OptionsContainer.SelectionModeEnabled := True;
         Editor.Selection.Options := Editor.Selection.Options + [soALTSetsColumnMode];
         Editor.Selection.Mode := smColumn;
         Keybd_Event(VK_SHIFT, MapVirtualKey(VK_SHIFT, 0), 0, 0);
@@ -1489,12 +1488,12 @@ end;
 
 procedure TMainForm.ActionToolsCompareFilesExecute(Sender: TObject);
 begin
-  //FDocument.CompareFiles;
+  FDocument.SelectForCompare;
 end;
 
 procedure TMainForm.ActionToolsConvertExecute(Sender: TObject);
 begin
-  ConvertForm.Open;
+  //ConvertForm.Open;
 end;
 
 procedure TMainForm.ActionToolsLanguageEditorExecute(Sender: TObject);
@@ -1710,7 +1709,7 @@ end;
 
 procedure TMainForm.ActionViewFilesExecute(Sender: TObject);
 begin
-  with SearchForFilesForm do
+  with SearchForFilesForm(nil) do
   begin
     OnOpenFile := DoSearchForFilesOpenFile;
     Open(FDirectory.SelectedPath);
@@ -2010,7 +2009,7 @@ begin
     ActionViewSpecialChars.Enabled := ActionViewLineNumbers.Enabled;
     ActionDocumentInfo.Enabled := ActiveDocumentFound;
     ActionToolsSelectForCompare.Enabled := False; // TODO: not implemented ActiveDocumentFound and not FDocument.ActiveDocumentModified;
-    ActionToolsCompareFiles.Enabled := False; // TODO: not implemented
+    ActionToolsCompareFiles.Enabled := True; // TODO: not implemented
     ActionDocumentFormatJSON.Enabled := ActiveDocumentFound and IsJSONDocument;
     ActionDocumentFormatSQL.Enabled := FSQLFormatterDLLFound and ActiveDocumentFound and IsSQLDocument;
     ActionDocumentFormatXML.Enabled := ActiveDocumentFound and IsXMLDocument;
@@ -2067,12 +2066,12 @@ end;
 procedure TMainForm.SetBookmarks;
 var
   i: Integer;
-  BookmarkList: TBCEditorBookmarkList;
+  BookmarkList: TBCEditorMarkList;
   LActionGotoBookmarks, LActionToggleBookmarks: TAction;
 begin
   if OptionsContainer.LeftMarginShowBookmarks then
   begin
-    BookmarkList := FDocument.GetActiveBookmarkList;
+    BookmarkList := FDocument.GetActiveBookmarkList;   // MOD_RB
     { Bookmarks }
     for i := 1 to 9 do
     begin
@@ -2087,19 +2086,21 @@ begin
         LActionToggleBookmarks.Caption := Format('%s &%d', [LanguageDataModule.GetConstant('Bookmark'), i]);
     end;
     if Assigned(BookmarkList) then
-    for i := 0 to BookmarkList.Count - 1 do
     begin
-      LActionGotoBookmarks := TAction(FindComponent(Format('ActionGotoBookmarks%d', [BookmarkList.Items[i].Index + 1])));
-      if Assigned(LActionGotoBookmarks) then
+      for i := 0 to BookmarkList.Count - 1 do
       begin
-        LActionGotoBookmarks.Enabled := True;
-        LActionGotoBookmarks.Caption := Format('%s &%d: %s %d', [LanguageDataModule.GetConstant('Bookmark'),
-          BookmarkList.Items[i].Index + 1, LanguageDataModule.GetConstant('Line'), BookmarkList.Items[i].Line]);
+        LActionGotoBookmarks := TAction(FindComponent(Format('ActionGotoBookmarks%d', [BookmarkList.Items[i].Index + 1])));
+        if Assigned(LActionGotoBookmarks) then
+        begin
+          LActionGotoBookmarks.Enabled := True;
+          LActionGotoBookmarks.Caption := Format('%s &%d: %s %d', [LanguageDataModule.GetConstant('Bookmark'),
+            BookmarkList.Items[i].Index + 1, LanguageDataModule.GetConstant('Line'), BookmarkList.Items[i].Line]);
+        end;
+        LActionToggleBookmarks := TAction(FindComponent(Format('ActionToggleBookmarks%d', [BookmarkList.Items[i].Index + 1])));
+        if Assigned(LActionToggleBookmarks) then
+          LActionToggleBookmarks.Caption := Format('%s &%d: %s %d', [LanguageDataModule.GetConstant('Bookmark'),
+            BookmarkList.Items[i].Index + 1, LanguageDataModule.GetConstant('Line'), BookmarkList.Items[i].Line]);
       end;
-      LActionToggleBookmarks := TAction(FindComponent(Format('ActionToggleBookmarks%d', [BookmarkList.Items[i].Index + 1])));
-      if Assigned(LActionToggleBookmarks) then
-        LActionToggleBookmarks.Caption := Format('%s &%d: %s %d', [LanguageDataModule.GetConstant('Bookmark'),
-          BookmarkList.Items[i].Index + 1, LanguageDataModule.GetConstant('Line'), BookmarkList.Items[i].Line]);
     end;
   end;
 end;
@@ -2284,9 +2285,9 @@ begin
   GetHighlighters;
   GetHighlighterColors;
 
-  OptionsContainer.EncodingStrings := GetStringList(PopupMenuEncoding);
+  //OptionsContainer.EncodingStrings := GetStringList(PopupMenuEncoding);
   OptionsContainer.HighlighterStrings := GetStringList(PopupMenuHighlighters);
-  OptionsContainer.ColorStrings := GetStringList(PopupMenuColors);
+  OptionsContainer.HighlighterColorStrings := GetStringList(PopupMenuColors);
 
   MainMenu.Images := ImagesDataModule.ImageListSmall;
   OnSkinChange := ChangeSkin;
@@ -2526,10 +2527,10 @@ begin
     SplitterVertical.Visible := PanelDirectory.Visible;
 
     //ActionViewXMLTree.Checked := OptionsContainer.ShowXMLTree;
-    ActionViewWordWrap.Checked := OptionsContainer.EnableWordWrap;
-    ActionViewLineNumbers.Checked := OptionsContainer.EnableLineNumbers;
-    ActionViewSpecialChars.Checked := OptionsContainer.EnableSpecialChars;
-    ActionViewSelectionMode.Checked := OptionsContainer.EnableSelectionMode;
+    ActionViewWordWrap.Checked := OptionsContainer.WordWrapEnabled;
+    ActionViewLineNumbers.Checked := OptionsContainer.LineNumbersEnabled;
+    ActionViewSpecialChars.Checked := OptionsContainer.SpecialCharsEnabled;
+    ActionViewSelectionMode.Checked := OptionsContainer.SelectionModeEnabled;
     ActionViewEncodingSelection.Checked := TitleBar.Items[2].Visible;
     ActionViewHighlighterSelection.Checked := TitleBar.Items[4].Visible;
     ActionViewColorSelection.Checked := TitleBar.Items[6].Visible;
@@ -2795,7 +2796,7 @@ begin
       try
         StatusBar.Panels[4].Text := LanguageDataModule.GetConstant('CountingFiles');
         Application.ProcessMessages;
-        LCount := CountFilesInFolder(FolderText);
+        //LCount := CountFilesInFolder(FolderText);
       finally
         Screen.Cursor := crDefault;
         StatusBar.Panels[4].Text := '';

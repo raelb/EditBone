@@ -2,8 +2,7 @@ program EditBone;
 								  
 uses
   {$ifdef DEBUG}
-  FastMM4,
-  {$endif}
+  {$endif }
   Vcl.Forms,
   EditBone.Consts in 'Units\EditBone.Consts.pas',
   EditBone.DataModule.Images in 'DataModules\EditBone.DataModule.Images.pas' {EBDataModuleImages: TDataModule},
@@ -26,7 +25,14 @@ uses
   EditBone.Frame.Output.TabSheet in 'Frames\EditBone.Frame.Output.TabSheet.pas' {OutputTabSheetFrame: TFrame},
   EditBone.Output in 'Units\EditBone.Output.pas',
   EditBone.Types in 'Units\EditBone.Types.pas',
-  EditBone.XMLTree in 'Units\EditBone.XMLTree.pas';
+  EditBone.XMLTree in 'Units\EditBone.XMLTree.pas',
+  BCCommon.Form.Base in '..\Common\Source\BCCommon.Form.Base.pas' {BCBaseForm},
+  BCCommon.Images in '..\Common\Source\BCCommon.Images.pas' {ImagesDataModule: TDataModule},
+  BCCommon.Dialog.Base in '..\Common\Source\BCCommon.Dialog.Base.pas' {BCBaseDialog},
+  BCCommon.Frame.Options.Base in '..\Common\Source\BCCommon.Frame.Options.Base.pas' {BCOptionsBaseFrame: TFrame},
+  BCCommon.Form.Print.Preview in '..\Common\Source\BCCommon.Form.Print.Preview.pas' {PrintPreviewForm},
+  BCCommon.Frame.Compare in '..\Common\Source\BCCommon.Frame.Compare.pas' {CompareFrame: TFrame},
+  BCCommon.Language.Strings in '..\Common\Source\BCCommon.Language.Strings.pas' {LanguageDataModule: TDataModule};
 
 {$R *.res}
 
@@ -38,5 +44,7 @@ begin
   Application.Title := 'EditBone';
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TImagesDataModule, ImagesDataModule);
+  Application.CreateForm(TLanguageDataModule, LanguageDataModule);
   Application.Run;
 end.

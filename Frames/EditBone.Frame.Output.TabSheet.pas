@@ -3,7 +3,7 @@ unit EditBone.Frame.Output.TabSheet;
 interface
 
 uses
-  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VirtualTrees, Vcl.ExtCtrls, BCControls.Panel,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VirtualTrees, Vcl.ExtCtrls, BCControl.Panel,
   sPanel, sFrameAdapter;
 
 type

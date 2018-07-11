@@ -4,7 +4,7 @@ interface
 
 uses
   System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
-  BCCommon.Options.Container, BCCommon.Frames.Options.Base, BCControls.Panel, sPanel, sFrameAdapter,
+  BCCommon.Options.Container, BCCommon.Frame.Options.Base, BCControl.Panel, sPanel, sFrameAdapter,
   acSlider, sLabel;
 
 type

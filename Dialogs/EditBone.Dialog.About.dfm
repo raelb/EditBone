@@ -8,12 +8,13 @@ inherited AboutDialog: TAboutDialog
   Color = clBtnFace
   Font.Name = 'Segoe UI'
   FormStyle = fsStayOnTop
-  OldCreateOrder = True
   Position = poMainFormCenter
   OnClose = FormClose
+  ExplicitWidth = 475
+  ExplicitHeight = 405
   PixelsPerInch = 96
   TextHeight = 13
-  object PanelTop: TBCPanel
+  object PanelTop: TBCPanel [0]
     Left = 0
     Top = 0
     Width = 469
@@ -49,7 +50,7 @@ inherited AboutDialog: TAboutDialog
     object LabelVersion: TLabel
       Left = 10
       Top = 40
-      Width = 104
+      Width = 103
       Height = 15
       Caption = 'Version %s (%d-bit)'
       Font.Charset = DEFAULT_CHARSET
@@ -499,7 +500,7 @@ inherited AboutDialog: TAboutDialog
       IsControl = True
     end
   end
-  object PanelThanksTo: TBCPanel
+  object PanelThanksTo: TBCPanel [1]
     Left = 0
     Top = 137
     Width = 469
@@ -697,7 +698,7 @@ inherited AboutDialog: TAboutDialog
       end
     end
   end
-  object PanelButtons: TBCPanel
+  object PanelButtons: TBCPanel [2]
     Left = 0
     Top = 335
     Width = 469

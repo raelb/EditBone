@@ -3,8 +3,8 @@ unit EditBone.Frame.Options.Editor.Defaults;
 interface
 
 uses
-  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, BCControls.ComboBox, Vcl.ExtCtrls,
-  BCCommon.Options.Container, BCCommon.Frames.Options.Base, sComboBox, BCControls.Panel, sPanel, sFrameAdapter;
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, BCControl.ComboBox, Vcl.ExtCtrls,
+  BCCommon.Options.Container, BCCommon.Frame.Options.Base, sComboBox, BCControl.Panel, sPanel, sFrameAdapter;
 
 type
   TOptionsEditorDefaultsFrame = class(TBCOptionsBaseFrame)
@@ -74,8 +74,8 @@ end;
 
 procedure TOptionsEditorDefaultsFrame.Init;
 begin
-  ComboBoxDefaultColor.Items := OptionsContainer.ColorStrings;
-  ComboBoxDefaultEncoding.Items := OptionsContainer.EncodingStrings;
+  ComboBoxDefaultColor.Items := OptionsContainer.HighlighterColorStrings;  {.ColorStrings}
+  //ComboBoxDefaultEncoding.Items := OptionsContainer.EncodingStrings;
   ComboBoxDefaultHighlighter.Items := OptionsContainer.HighlighterStrings;
   GetSQLHighlighterItems;
 end;

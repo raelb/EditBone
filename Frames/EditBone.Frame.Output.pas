@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, System.SysUtils, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Buttons, Vcl.ComCtrls,
   Vcl.ActnList, Vcl.Menus, VirtualTrees, Vcl.PlatformDefaultStyleActnCtrls,
-  EditBone.Frame.Output.TabSheet, BCControls.PageControl, System.Actions, BCCommon.Images, sPageControl,
+  EditBone.Frame.Output.TabSheet, BCControl.PageControl, System.Actions, BCCommon.Images, sPageControl,
   sFrameAdapter;
 
 type

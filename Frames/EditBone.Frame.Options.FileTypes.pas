@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Types, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
-  BCControls.Edit, BCCommon.Options.Container, BCCommon.Frames.Options.Base, VirtualTrees, BCControls.Panel, sEdit,
+  BCControl.Edit, BCCommon.Options.Container, BCCommon.Frame.Options.Base, VirtualTrees, BCControl.Panel, sEdit,
   Vcl.ExtCtrls, sPanel, sFrameAdapter;
 
 type

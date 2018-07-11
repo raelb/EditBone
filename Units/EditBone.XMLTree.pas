@@ -3,7 +3,7 @@ unit EditBone.XMLTree;
 interface
 
 uses
-  VirtualTrees, Vcl.Graphics, Vcl.ImgList, System.Classes, BCEditor.Editor, BCControls.ProgressBar, BCEditor.Types,
+  VirtualTrees, Vcl.Graphics, Vcl.ImgList, System.Classes, BCEditor.Editor, BCControl.ProgressBar, BCEditor.Types,
   sCommonData, System.UITypes;
 
 type
@@ -35,7 +35,7 @@ type
     //function DoGetImageIndex(Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
     //  var Ghosted: Boolean; var Index: System.UITypes.TImageIndex): TCustomImageList; override;
     function DoGetImageIndex(Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
-      var Ghosted: Boolean; var Index: Integer): TCustomImageList; override;
+      var Ghosted: Boolean; var Index: TImageIndex): TCustomImageList; override;
     //function DoGetImageIndex(Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
     //  var Ghosted: Boolean; var Index: Integer): TCustomImageList; override;
     procedure CreateWnd; override;
@@ -400,7 +400,7 @@ begin
 
     Expanded[GetFirst] := True;
     EndUpdate;
-    Editor.CaretZero;
+    //Editor.CaretZero;
   finally
     LNodeStack.Free;
   end;
@@ -488,7 +488,7 @@ begin
 end;
 
 function TEBXMLTree.DoGetImageIndex(Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
-  var Ghosted: Boolean; var Index: Integer): TCustomImageList;
+  var Ghosted: Boolean; var Index: TImageIndex): TCustomImageList;
 //function TEBXMLTree.DoGetImageIndex(Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
 //  var Ghosted: Boolean; var Index: Integer): TCustomImageList;
 //function TEBXMLTree.DoGetImageIndex(Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
